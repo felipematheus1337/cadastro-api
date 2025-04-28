@@ -21,12 +21,19 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public PessoaResponse criarPessoa(PessoaCadastroRequest request) {
+    public PessoaResponse cadastrarPessoa(PessoaCadastroRequest request) {
 
         if (Boolean.FALSE.equals(request.concordaTermos())) throw new TermsNotAcceptedException();
 
         Pessoa pessoa = repository.save(pessoaMapper.toPessoa(request));
 
         return pessoaMapper.toPessoaCadastroResponse(pessoa);
+    }
+
+    @Override
+    public PessoaResponse obterPessoaPorId(Long id) {
+        return repository.findById(id)
+                .map(pessoaMapper::toPessoaCadastroResponse)
+                .orElse(null);
     }
 }

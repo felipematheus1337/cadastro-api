@@ -5,5 +5,7 @@ import com.cadastro.api.dtos.PessoaResponse;
 
 public interface BusinessService {
 
-    PessoaResponse criarPessoa(PessoaCadastroRequest request);
+    PessoaResponse cadastrarPessoa(PessoaCadastroRequest request);
+
+    PessoaResponse obterPessoaPorId(Long id);
 }
