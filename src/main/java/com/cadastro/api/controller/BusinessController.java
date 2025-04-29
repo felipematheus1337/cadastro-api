@@ -4,6 +4,7 @@ import com.cadastro.api.dtos.PessoaCadastroRequest;
 import com.cadastro.api.dtos.PessoaResponse;
 import com.cadastro.api.services.BusinessService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class BusinessController {
 
     @PostMapping
     @Tag(name = "Cadastrar Pessoa", description = "Cadastrar pessoa física/jurídica")
-    public ResponseEntity<PessoaResponse> cadastrarPessoa(@RequestBody PessoaCadastroRequest request) {
+    public ResponseEntity<PessoaResponse> cadastrarPessoa(@Valid @RequestBody PessoaCadastroRequest request) {
         PessoaResponse response = businessService.cadastrarPessoa(request);
 
         URI location = URI.create("/api/v1/" + response.id());
