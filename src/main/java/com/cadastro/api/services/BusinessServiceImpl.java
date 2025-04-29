@@ -1,10 +1,7 @@
 package com.cadastro.api.services;
 import com.cadastro.api.dtos.PessoaCadastroRequest;
 import com.cadastro.api.dtos.PessoaResponse;
-import com.cadastro.api.exceptions.EmailsDoNotMatchException;
-import com.cadastro.api.exceptions.MissingCnpjException;
-import com.cadastro.api.exceptions.MissingCpfException;
-import com.cadastro.api.exceptions.TermsNotAcceptedException;
+import com.cadastro.api.exceptions.*;
 import com.cadastro.api.mapper.PessoaMapperService;
 import com.cadastro.api.model.Pessoa;
 import com.cadastro.api.model.TipoPessoa;
@@ -46,6 +43,7 @@ public class BusinessServiceImpl implements BusinessService {
     private void validate(PessoaCadastroRequest request) {
         if (Objects.equals(request.concordaTermos(), Boolean.FALSE)) throw new TermsNotAcceptedException();
         if (!Objects.equals(request.email(), request.confirmarEmail())) throw new EmailsDoNotMatchException();
+        if (repository.existsByEmail(request.email())) throw new EmailAlreadyExistsException();
         if (TipoPessoa.FISICA.equals(request.tipoPessoa()) && (request.cpf() == null || request.cpf().isBlank()))
             throw new MissingCpfException();
 
