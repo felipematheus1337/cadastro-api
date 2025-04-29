@@ -1,0 +1,16 @@
+.gradle
+build
+out
+target
+.idea
+*.iml
+*.log
+*.md
+*.yml
+*.yaml
+Dockerfile
+docker-compose.yml
+.dockerignore
+.git
+.gitignore
+.vscode

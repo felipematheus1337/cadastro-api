@@ -1,11 +1,17 @@
 package com.cadastro.api.services;
 import com.cadastro.api.dtos.PessoaCadastroRequest;
 import com.cadastro.api.dtos.PessoaResponse;
+import com.cadastro.api.exceptions.EmailsDoNotMatchException;
+import com.cadastro.api.exceptions.MissingCnpjException;
+import com.cadastro.api.exceptions.MissingCpfException;
 import com.cadastro.api.exceptions.TermsNotAcceptedException;
 import com.cadastro.api.mapper.PessoaMapperService;
 import com.cadastro.api.model.Pessoa;
+import com.cadastro.api.model.TipoPessoa;
 import com.cadastro.api.repositories.PessoaRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 
 @Service
@@ -23,7 +29,7 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public PessoaResponse cadastrarPessoa(PessoaCadastroRequest request) {
 
-        if (request.concordaTermos() != null && Boolean.FALSE.equals(request.concordaTermos())) throw new TermsNotAcceptedException();
+        validate(request);
 
         Pessoa pessoa = repository.save(pessoaMapper.toPessoa(request));
 
@@ -35,5 +41,16 @@ public class BusinessServiceImpl implements BusinessService {
         return repository.findById(id)
                 .map(pessoaMapper::toPessoaCadastroResponse)
                 .orElse(null);
+    }
+
+    private void validate(PessoaCadastroRequest request) {
+        if (Objects.equals(request.concordaTermos(), Boolean.FALSE)) throw new TermsNotAcceptedException();
+        if (!Objects.equals(request.email(), request.confirmarEmail())) throw new EmailsDoNotMatchException();
+        if (TipoPessoa.FISICA.equals(request.tipoPessoa()) && (request.cpf() == null || request.cpf().isBlank()))
+            throw new MissingCpfException();
+
+        if (TipoPessoa.JURIDICA.equals(request.tipoPessoa()) && (request.cnpj() == null || request.cnpj().isBlank()))
+            throw new MissingCnpjException();
+
     }
 }

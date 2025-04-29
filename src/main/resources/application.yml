@@ -3,6 +3,7 @@ spring:
   application:
     name: cadastro-api
   datasource:
+    initialization-mode: always
     url: jdbc:postgresql://localhost:5432/cadastrodb
     username: postgres
     password: postgres

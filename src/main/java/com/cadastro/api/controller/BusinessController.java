@@ -3,6 +3,7 @@ package com.cadastro.api.controller;
 import com.cadastro.api.dtos.PessoaCadastroRequest;
 import com.cadastro.api.dtos.PessoaResponse;
 import com.cadastro.api.services.BusinessService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class BusinessController {
     }
 
     @PostMapping
+    @Tag(name = "Cadastrar Pessoa", description = "Cadastrar pessoa física/jurídica")
     public ResponseEntity<PessoaResponse> cadastrarPessoa(@RequestBody PessoaCadastroRequest request) {
         PessoaResponse response = businessService.cadastrarPessoa(request);
 
@@ -29,6 +31,7 @@ public class BusinessController {
     }
 
     @GetMapping("/{id}")
+    @Tag(name = "Buscar pessoa", description = "Buscar pessoa pelo Id")
     public ResponseEntity<PessoaResponse> obterPessoaPorId(@PathVariable Long id) {
         PessoaResponse response = businessService.obterPessoaPorId(id);
 

@@ -14,12 +14,15 @@ public class Pessoa {
     private String nome;
 
     @NotNull
+    @Column(unique = true)
     private String email;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private TipoPessoa tipoPessoa;
 
+    @Column(unique = true)
+    @NotNull
     private String cpf;
     private String cnpj;
     private String celular;

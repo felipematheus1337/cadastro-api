@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  postgres:
+  cadastro-postgres:
     image: postgres:15
     container_name: cadastro-postgres
     environment:
@@ -14,6 +12,21 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - cadastro-network
+
+  cadastro-api:
+    build:
+      context: .
+    container_name: cadastro-api
+    depends_on:
+      - cadastro-postgres
+    networks:
+      - cadastro-network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cadastro-postgres:5432/cadastrodb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - "8080:8080"
 
 volumes:
   postgres_data:
