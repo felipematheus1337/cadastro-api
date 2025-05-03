@@ -14,8 +14,7 @@ services:
       - cadastro-network
 
   cadastro-api:
-    build:
-      context: .
+    image: kenshiro1337/cadastroapi:latest
     container_name: cadastro-api
     depends_on:
       - cadastro-postgres
