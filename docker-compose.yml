@@ -26,9 +26,11 @@ services:
       - SPRING_DATASOURCE_PASSWORD=postgres
     ports:
       - "8080:8080"
+    command: ./gradlew bootRun
 
 volumes:
   postgres_data:
 
 networks:
   cadastro-network:
+    driver: bridge
