@@ -37,6 +37,6 @@ jobs:
 
     - name: Push to Docker Hub Container Registry
       run: |
-        docker tag kenshiro1337/cadastroapi:latest kenshiro1337/cadastroapi:${{ github.run_id }}
-        docker push kenshiro1337/cadastroapi:${{ github.run_id }}
-        docker push kenshiro1337/cadastroapi:latest
+        docker tag ${{ secrets.DOCKER_USERNAME }}/cadastroapi:latest ${{ secrets.DOCKER_USERNAME }}/cadastroapi:${{ github.run_id }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/cadastroapi:${{ github.run_id }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/cadastroapi:latest
