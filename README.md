@@ -1,6 +1,7 @@
 # Cadastro API
 
 API de cadastro de pessoas físicas e jurídicas, com validações automáticas de CPF, CNPJ e e-mail. Desenvolvido em Java 21 com Spring Boot, PostgreSQL e Docker.
+Criado Pipeline de CI/CD com GithubActions e DockerHUB.
 
 ## 🚀 Tecnologias
 
